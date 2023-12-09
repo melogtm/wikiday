@@ -4,6 +4,9 @@ import axios from "axios";
 
 const app = express(); 
 const port = 3000;
+let EVENT_API = "https://byabbe.se/on-this-day/"
+let IMG_API = "https://en.wikipedia.org/w/api.php?action=query&titles="
+let IMG_API_PROPS = "&prop=pageimages&format=json&pithumbsize=200"
 
 app.set('view, engine', 'ejs');
 app.use(express.static("public")); 
@@ -13,21 +16,22 @@ let dateObject = new Date();
 let events = '';
 let births = '';
 let deaths = '';
+let url_to_Image = '';
 
 let TopMessage = `Historical Events on ${dateObject.toLocaleString('en-US', {month: 'long'})} ${dateObject.getDate()}`
 
 app.get("/", async (req, res) => {
-    const apiResult = await axios.get(`https://byabbe.se/on-this-day/${dateObject.getMonth() + 1}/${dateObject.getDate()}/events.json`);
+    const apiResult = await axios.get(`${EVENT_API}${dateObject.getMonth() + 1}/${dateObject.getDate()}/events.json`);
 
     events = apiResult.data.events; 
 
     let choosenEvent = events[Math.floor(Math.random() * (events.length - 1))]
 
-    const apiImage = await axios.get(`https://en.wikipedia.org/w/api.php?action=query&titles=${choosenEvent.wikipedia[0].title}&prop=pageimages&format=json&pithumbsize=200`);
+    const apiImage = await axios.get(`${IMG_API}${choosenEvent.wikipedia[0].title}${IMG_API_PROPS}`);
 
     const pageResult = apiImage.data.query.pages
     
-    let url_to_Image = 'images/no-image.png';
+    url_to_Image = 'images/no-image.png'
 
     if (pageResult[Object.keys(pageResult)[0]].thumbnail) {
         url_to_Image = pageResult[Object.keys(pageResult)[0]].thumbnail.source; 
@@ -43,7 +47,7 @@ app.post("/", (req, res) => {
         dateObject = new Date(`${req.body.factdate}T12:00:00`);
     }
 
-    TopMessage = `${dateObject.getDate()} de ${dateObject.toLocaleString('pt-Br', {month: 'long'})} na História...`; 
+    TopMessage = `Historical Events on ${dateObject.toLocaleString('en-US', {month: 'long'})} ${dateObject.getDate()}`
 
     res.redirect("/"); 
 })
@@ -54,19 +58,19 @@ app.post("/birth", async (req, res) => {
     } else {
         dateObject = new Date(`${req.body.bddate}T12:00:00`);
     }
-    TopMessage = `Nascido(a) em ${dateObject.getDate()} de ${dateObject.toLocaleString('pt-Br', {month: 'long'})}...`
-
-    const apiResult = await axios.get(`https://byabbe.se/on-this-day/${dateObject.getMonth() + 1}/${dateObject.getDate()}/births.json`);
+    TopMessage = `Born in ${dateObject.toLocaleString('en-US', {month: 'long'})} ${dateObject.getDate()} `
+    
+    const apiResult = await axios.get(`${EVENT_API}${dateObject.getMonth() + 1}/${dateObject.getDate()}/births.json`);
 
     births = apiResult.data.births; 
 
     let choosenBirth = births[Math.floor(Math.random() * (births.length - 1))]
 
-    const apiImage = await axios.get(`https://en.wikipedia.org/w/api.php?action=query&titles=${choosenBirth.wikipedia[0].title}&prop=pageimages&format=json&pithumbsize=200`);
+    const apiImage = await axios.get(`${IMG_API}${choosenBirth.wikipedia[0].title}${IMG_API_PROPS}`);
 
     const pageResult = apiImage.data.query.pages
-    
-    let url_to_Image = 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/No_image_3x4_50_trans_borderless.svg/200px-No_image_3x4_50_trans_borderless.svg.png';
+
+    url_to_Image = 'images/no-image.png'
 
     if (pageResult[Object.keys(pageResult)[0]].thumbnail) {
         url_to_Image = pageResult[Object.keys(pageResult)[0]].thumbnail.source; 
@@ -81,19 +85,19 @@ app.post("/death", async (req, res) => {
     } else {
         dateObject = new Date(`${req.body.bddate}T12:00:00`);
     }
-    TopMessage = `Faleceu em ${dateObject.getDate()} de ${dateObject.toLocaleString('pt-Br', {month: 'long'})}...`
+    TopMessage = `Died in ${dateObject.toLocaleString('en-US', {month: 'long'})} ${dateObject.getDate()}`
 
-    const apiResult = await axios.get(`https://byabbe.se/on-this-day/${dateObject.getMonth() + 1}/${dateObject.getDate()}/deaths.json`);
+    const apiResult = await axios.get(`${EVENT_API}${dateObject.getMonth() + 1}/${dateObject.getDate()}/deaths.json`);
 
     deaths = apiResult.data.deaths; 
 
     let choosenDeath = deaths[Math.floor(Math.random() * (deaths.length - 1))]
 
-    const apiImage = await axios.get(`https://en.wikipedia.org/w/api.php?action=query&titles=${choosenDeath.wikipedia[0].title}&prop=pageimages&format=json&pithumbsize=200`);
+    const apiImage = await axios.get(`${IMG_API}${choosenDeath.wikipedia[0].title}${IMG_API_PROPS}`);
 
     const pageResult = apiImage.data.query.pages
     
-    let url_to_Image = 'public/images/no-image.png';
+    url_to_Image = 'images/no-image.png'
 
     if (pageResult[Object.keys(pageResult)[0]].thumbnail) {
         url_to_Image = pageResult[Object.keys(pageResult)[0]].thumbnail.source; 
