@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+    margin: 0;
+    padding: 0; 
+    box-sizing: border-box;
+    font-family:'Roboto', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: rgb(252, 252, 252);
+    margin-bottom: 30px;
+    border-bottom: 1px solid black; 
+}
+
+nav div {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    color: gray; 
+}
+
+a {
+    text-decoration: none;
+    color: gray; 
+}
+
+a[href="/"] {
+    color: black;
+}
+
+header h2 {
+    text-align: center;
+    font-size: 5.5vh;
+}
+
+input[type="date"]{
+    background-color: #000000;
+    padding: 15px;
+    color: #ffffff;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
+::-webkit-calendar-picker-indicator{
+    background-color: #ffffff;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+input[type="submit"]{
+    background: #838383;
+    color: white;
+    border: hidden; 
+    height: 50px;
+    width: 150px;
+    text-shadow: none;
+}
+
+input[type="submit"]:hover{
+    cursor: pointer;
+}
+
+.fact-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-direction: column;
+    padding: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.fact-section img {
+    display: block; 
+    margin: 0 auto; 
+}
+.fact-section q {
+    font-weight: lighter;
+}
+.fact-section small {
+    font-weight: bolder;
+}
+
+main {
+    display: flex;
+    border-top: 1px solid black;
+    padding: 15px;
+    margin-top: auto; 
+    background-color: rgb(252, 252, 252);
+    height: 100%;
+    justify-content: space-around;
+    box-shadow: 0 50vh 0 50vh;
+}
+
+.barrier {
+    width: 1.5px;
+    height: auto;
+    background-color: black;
+}
+
+.user-data form {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    gap: 20px
+}
+
+input[name="bddate"] {
+    align-self: flex-start;
+}
+
+.inputs-nasc-mort {
+    gap: 5px;
+    display: flex;
+    flex-direction: column; 
+}
+
+@media screen and (max-width: 730px) {
+    main {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    }
+    .barrier {
+        width: 100%;
+        height: 1px;
+        background-color: black;
+    }
+}

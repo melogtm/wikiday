@@ -1,0 +1,13 @@
+<%- include("partials/header.ejs") %>
+
+    <header>
+        <h2><%= message %></h2>
+    </header>
+
+    <section class="fact-section">
+        <img src=<%= imageUrl %> alt="test-image">
+        <q><i><%= eventDescription %></i></q>
+        <small>In <%= eventDate %></small>
+    </section>
+
+<%- include("partials/footer.ejs") %>
