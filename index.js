@@ -13,33 +13,47 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
 let dateObject = new Date();
-let events = '';
-let births = '';
-let deaths = '';
-let url_to_Image = '';
 
-let TopMessage = `Historical Events on ${dateObject.toLocaleString('en-US', {month: 'long'})} ${dateObject.getDate()}`;
-
-app.get("/", async (req, res) => {
+async function chooseEventAndImage(events_api_url, top_message) {
     try {
-        const apiResult = await axios.get(`${EVENT_API}${dateObject.getMonth() + 1}/${dateObject.getDate()}/events.json`);
-        events = apiResult.data.events; 
+        const apiResult = await axios.get(events_api_url); 
 
-        let choosenEvent = events[Math.floor(Math.random() * (events.length - 1))];
+        // Determine if we are dealing with births, deaths or events in general. 
+        let firstKey = Object.keys(apiResult.data)[2]; 
 
-        const apiImage = await axios.get(`${IMG_API}${choosenEvent.wikipedia[0].title}${IMG_API_PROPS}`);
-
-        const pageResult = apiImage.data.query.pages;
+        let event = apiResult.data[firstKey][Math.floor(Math.random() * (apiResult.data[firstKey].length - 1))];
         
-        url_to_Image = 'images/no-image.png';
-
-        if (pageResult[Object.keys(pageResult)[0]].thumbnail) {
-            url_to_Image = pageResult[Object.keys(pageResult)[0]].thumbnail.source; 
+        const apiImage = await axios.get(`${IMG_API}${event.wikipedia[0].title}${IMG_API_PROPS}`); 
+    
+        const ImgPageResult = apiImage.data.query.pages;
+    
+        let url_to_Image = 'images/no-image.png'; 
+    
+        if (ImgPageResult[Object.keys(ImgPageResult)[0]].thumbnail) {
+            url_to_Image = ImgPageResult[Object.keys(ImgPageResult)[0]].thumbnail.source;
+        };
+    
+        let eventBuild = {
+            userMessage: top_message,
+            choosenEvent: event, 
+            imgEvent: url_to_Image
         };
 
-        res.render("index.ejs", {message: TopMessage, imageUrl: url_to_Image, eventDescription: choosenEvent.description, eventDate: choosenEvent.year}); 
+        return eventBuild; 
     } catch (error) {
-        res.render("index.ejs", {message: 'Something went wrong: ' + error.message, imageUrl: url_to_Image, eventDescription: 'It was not your fault!', eventDate: 'bugs, we trust.'});
+        console.log(error.message);
+    } throw "Bad API Usage"; 
+};
+ 
+app.get("/", async (req, res) => {
+    try {
+
+        let apiResponse = await chooseEventAndImage(`${EVENT_API}${dateObject.getMonth() + 1}/${dateObject.getDate()}/events.json`, `Historical Events on ${dateObject.toLocaleString('en-US', {month: 'long'})} ${dateObject.getDate()}`);
+
+        res.render("index.ejs", {message: apiResponse.userMessage, imageUrl: apiResponse.imgEvent, eventDescription: apiResponse.choosenEvent.description, eventDate: apiResponse.choosenEvent.year}); 
+
+    } catch (error) {
+        res.render("index.ejs", {message: 'Something went wrong: ' + error, imageUrl: 'images/no-image.png', eventDescription: 'It was not your fault!', eventDate: 'bugs, we trust.'});
     };
 });
 
@@ -49,8 +63,6 @@ app.post("/", (req, res) => {
     } else {
         dateObject = new Date(`${req.body.factdate}T12:00:00`);
     };
-
-    TopMessage = `Historical Events on ${dateObject.toLocaleString('en-US', {month: 'long'})} ${dateObject.getDate()}`;
 
     res.redirect("/"); 
 });
@@ -62,28 +74,12 @@ app.post("/birth", async (req, res) => {
         dateObject = new Date(`${req.body.bddate}T12:00:00`);
     };
 
-    TopMessage = `Born in ${dateObject.toLocaleString('en-US', {month: 'long'})} ${dateObject.getDate()}`;
-    
     try {
-        const apiResult = await axios.get(`${EVENT_API}${dateObject.getMonth() + 1}/${dateObject.getDate()}/births.json`);
+        let apiResponse = await chooseEventAndImage(`${EVENT_API}${dateObject.getMonth() + 1}/${dateObject.getDate()}/births.json`, `Born in ${dateObject.toLocaleString('en-US', {month: 'long'})} ${dateObject.getDate()}`);
 
-        births = apiResult.data.births; 
-
-        let choosenBirth = births[Math.floor(Math.random() * (births.length - 1))];
-
-        const apiImage = await axios.get(`${IMG_API}${choosenBirth.wikipedia[0].title}${IMG_API_PROPS}`);
-
-        const pageResult = apiImage.data.query.pages;
-
-        url_to_Image = 'images/no-image.png';
-
-        if (pageResult[Object.keys(pageResult)[0]].thumbnail) {
-            url_to_Image = pageResult[Object.keys(pageResult)[0]].thumbnail.source; 
-        };
-
-        res.render("index.ejs", {message: TopMessage, imageUrl: url_to_Image, eventDescription: choosenBirth.description, eventDate: choosenBirth.year}); 
+        res.render("index.ejs", {message: apiResponse.userMessage, imageUrl: apiResponse.imgEvent, eventDescription: apiResponse.choosenEvent.description, eventDate: apiResponse.choosenEvent.year}); 
     } catch (error) {
-        res.render("index.ejs", {message: 'Something went wrong: ' + error.message, imageUrl: url_to_Image, eventDescription: 'It was not your fault!', eventDate: 'bugs, we trust.'});
+        res.render("index.ejs", {message: 'Something went wrong: ' + error.message, imageUrl: 'images/no-image.png', eventDescription: 'It was not your fault!', eventDate: 'bugs, we trust.'});
     }
     
 });
@@ -95,26 +91,10 @@ app.post("/death", async (req, res) => {
         dateObject = new Date(`${req.body.bddate}T12:00:00`);
     };
 
-    TopMessage = `Died in ${dateObject.toLocaleString('en-US', {month: 'long'})} ${dateObject.getDate()}`;
-
     try {
-        const apiResult = await axios.get(`${EVENT_API}${dateObject.getMonth() + 1}/${dateObject.getDate()}/deaths.json`);
+        let apiResponse = await chooseEventAndImage(`${EVENT_API}${dateObject.getMonth() + 1}/${dateObject.getDate()}/deaths.json`, `Died in ${dateObject.toLocaleString('en-US', {month: 'long'})} ${dateObject.getDate()}`);
 
-        deaths = apiResult.data.deaths; 
-
-        let choosenDeath = deaths[Math.floor(Math.random() * (deaths.length - 1))];
-
-        const apiImage = await axios.get(`${IMG_API}${choosenDeath.wikipedia[0].title}${IMG_API_PROPS}`);
-
-        const pageResult = apiImage.data.query.pages;
-        
-        url_to_Image = 'images/no-image.png';
-
-        if (pageResult[Object.keys(pageResult)[0]].thumbnail) {
-            url_to_Image = pageResult[Object.keys(pageResult)[0]].thumbnail.source; 
-        };
-
-        res.render("index.ejs", {message: TopMessage, imageUrl: url_to_Image, eventDescription: choosenDeath.description, eventDate: choosenDeath.year});  
+        res.render("index.ejs", {message: apiResponse.userMessage, imageUrl: apiResponse.imgEvent, eventDescription: apiResponse.choosenEvent.description, eventDate: apiResponse.choosenEvent.year}); 
     } catch (error) {
         res.render("index.ejs", {message: 'Something went wrong: ' + error.message, imageUrl: url_to_Image, eventDescription: 'It was not your fault!', eventDate: 'bugs, we trust.'});
     }
