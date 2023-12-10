@@ -4,9 +4,9 @@ import axios from "axios";
 
 const app = express(); 
 const port = 3000;
-let EVENT_API = "https://byabbe.se/on-this-day/"
-let IMG_API = "https://en.wikipedia.org/w/api.php?action=query&titles="
-let IMG_API_PROPS = "&prop=pageimages&format=json&pithumbsize=200"
+const EVENT_API = "https://byabbe.se/on-this-day/"
+const IMG_API = "https://en.wikipedia.org/w/api.php?action=query&titles="
+const IMG_API_PROPS = "&prop=pageimages&format=json&pithumbsize=200"
 
 app.set('view, engine', 'ejs');
 app.use(express.static("public")); 
