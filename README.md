@@ -1,3 +1,7 @@
+<p align="center">
+  <img height=200 src="public/images/site-teaser.png" />
+</p>
+
 <h3 align="center">WikiDay</h3>
   
   <p align="center">
