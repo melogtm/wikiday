@@ -54,7 +54,7 @@
    ```
 3. Run server, you can set up another port if ```3000``` is being used
    ```sh
-   node index.js
+   npm run start 
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
