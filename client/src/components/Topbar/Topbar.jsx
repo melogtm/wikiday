@@ -4,7 +4,7 @@ export default function Topbar() {
   return (
     <nav className="topbar">
         <div className="topbarTitle">
-            <h3>WikiDay</h3>
+            <h3><a href="/">WikiDay</a></h3>
         </div>
         <div className="topbarAnchor">
             <a href="/about"><p className="about">About</p></a>

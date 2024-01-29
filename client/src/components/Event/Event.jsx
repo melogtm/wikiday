@@ -1,7 +1,23 @@
+/*
+import { useEffect, useState } from "react"
+import axios from "axios"; 
+*/
 import "./event.css"
 
 // Props 
 export default function Event() {
+
+  /*
+  const [status, setStatus] = useState({});
+  useEffect(() => {
+    axios.get("http://localhost:9000/status") 
+    .then((res) => {
+      setStatus(res.data); 
+      console.log(res.data); 
+    });
+  }, []);
+  */
+
   return (
     <div className="event">
       <header>
