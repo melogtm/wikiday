@@ -1,0 +1,81 @@
+.footer {
+    position: relative;
+    bottom: 0; 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    padding-bottom: 50px;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--dark-color);
+    width: 100%;
+    height: auto;
+    margin-top: auto;
+}
+
+.formTitle {
+    font-family: 'Merriweather', serif;
+    font-size: 20px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--lightest-color);
+    margin-bottom: 10px;
+}
+
+.eventRegionForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input[type="date"] {
+    background-color: var(--lighter-color);
+    padding: 10px;
+    color: var(--dark-color);
+    font-size: 18px;
+    border: none; 
+    outline: none; 
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.eventRegionSubmit {
+    border: none; 
+    border-radius: 10px;
+    background-color: var(--lighter-color);
+    color: var(--dark-color);
+    width: calc(100% - 50px);
+    height: 30px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.specificEventsRegion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.specificEventsRegionButtons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.specificEventsRegionSubmit {
+    width: 100%;
+    height: 30px;
+    border: none; 
+    border-radius: 10px;
+    color: var(--lightest-color);
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.birthButton {
+    background-color: lightslategray;
+}
+.deathButton {
+    background-color: lightcoral; 
+}
