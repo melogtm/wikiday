@@ -1,10 +1,12 @@
 import express from "express"; 
+import cors from "cors";
 import formatEvent from "./data/format-event.js";
 
 const app = express(); 
 const PORT = process.env.PORT || 9000;
 
 app.use(express.json()); 
+app.use(cors()); 
 
 async function getRandomFact(event_type, res) {
     const randomFact = await formatEvent(event_type); 

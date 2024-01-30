@@ -1,11 +1,11 @@
 .footer {
-    position: relative;
+    position: absolute;
     bottom: 0; 
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
-    padding-bottom: 50px;
+
     justify-content: space-around;
     align-items: center;
     background-color: var(--dark-color);
@@ -38,6 +38,7 @@ input[type="date"] {
     outline: none; 
     border-radius: 5px;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .eventRegionSubmit {
