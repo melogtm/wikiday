@@ -4,17 +4,15 @@ export default function About() {
   return (
     <article className="about">
       <section className="aboutSection">
-        <strong className="aboutTitle">Introdução:</strong>
-        <p className="aboutInfo">Este projeto tem como objetivo principal oferecer uma experiência educativa e informativa, permitindo aos usuários explorar eventos marcantes na história por meio de uma interface simples e interativa. O foco principal deste projeto é a utilização de APIs (Interfaces de Programação de Aplicações) para obter e apresentar dados históricos de maneira acessível.</p> 
+        <strong className="aboutTitle">Introduction:</strong>
+        <p className="aboutInfo">This project's main objective is to offer an educational and informative experience, allowing users to explore important events in history through a simple and interactive interface. The main focus of this project is the use of APIs (Application Programming Interfaces) to obtain and present historical data in an accessible way.</p> 
       </section>
 
        <section className="aboutSection">
-          <strong className="aboutTitle">Recursos Principais:</strong>
+          <strong className="aboutTitle">Services:</strong>
               <ul className="aboutList aboutInfo">
-                <li className="aboutItem">API de Eventos Históricos: 
-                        Integração com uma API que fornece dados detalhados sobre eventos históricos relevantes. Essa API será a espinha dorsal do projeto, fornecendo informações precisas e confiáveis.</li>
-                <li className="aboutItem">Interface Gráfica Intuitiva:
-                        Uma interface de usuário amigável e intuitiva que permite aos usuários navegar pelos eventos históricos de forma simples e agradável.</li>
+                <li className="aboutItem">Historical Events API: Integration with an API that provides detailed data on relevant historical events. This API will be the backbone of the project, providing accurate and reliable information.</li>
+                <li className="aboutItem">Intuitive Graphical Interface: A friendly and intuitive user interface that allows users to navigate historical events in a simple and enjoyable way.</li>
               </ul>
        </section>
     </article>
