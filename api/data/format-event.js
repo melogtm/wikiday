@@ -13,7 +13,7 @@ export default async function formatEvent(event, user_date = false) {
     if (user_date) {
         historical_date = new Date(`${user_date}T12:00:00`); 
     };
- 
+
     // Hold the number for that month (Jan = 0; Fev = 1), but later on convert it to its name for the user. 
     let numeric_month, string_month, day; 
     numeric_month = historical_date.getMonth() + 1; 
