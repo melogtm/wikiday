@@ -1,0 +1,30 @@
+.about {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.aboutSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+}
+
+.aboutTitle {
+    font-family: 'Merriweather', serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.aboutInfo {
+    width: 75%;
+    line-height: 20px;
+}
+
+.aboutInfo::first-letter {
+    font-size: 30px;
+    font-weight: 900;
+}

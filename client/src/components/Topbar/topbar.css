@@ -1,0 +1,31 @@
+.topbar {
+    position: sticky;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    background-color: var(--dark-color);
+}
+
+.topbarTitle {
+    font-family: 'Merriweather', serif;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.topbarTitle {
+    color: var(--lightest-color);
+}
+
+.topbarAnchor {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    color: var(--lightest-color); 
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+}
